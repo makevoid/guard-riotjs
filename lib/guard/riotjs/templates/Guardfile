@@ -1,0 +1,3 @@
+guard :riotjs do
+  watch(%r{^app/frontend/riot/.+\.tag})
+end

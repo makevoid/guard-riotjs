@@ -5,7 +5,7 @@ require 'guard/riotjs/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "guard-riotjs"
-  spec.version       = Guard::Riotjs::VERSION
+  spec.version       = Guard::RiotjsVersion::VERSION
   spec.authors       = ["ichi"]
   spec.email         = ["ichi.ttht.1@gmail.com"]
   spec.summary       = %q{TODO: Write a short summary. Required.}
@@ -17,6 +17,8 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
+
+  spec.add_dependency 'guard-compat', '~> 1.1'
 
   spec.add_development_dependency "bundler", "~> 1.6"
   spec.add_development_dependency "rake"
