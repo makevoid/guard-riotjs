@@ -1,55 +1,42 @@
 require 'guard/compat/plugin'
-require 'fileutils'
+require 'guard/watcher'
+
+require "guard/riotjs/runner"
 
 module Guard
   class Riotjs < Plugin
-    attr_accessor :options
+    attr_accessor :options, :runner
 
     DEFAULT_OPTIONS = {
-      cmd: 'riot',
-      src: 'app/frontend/riot',
-      dist: 'app/assets/javascripts/riot',
+      output: 'app/assets/javascripts/riot',
     }
 
     def initialize(options = {})
-      super
-      @options = DEFAULT_OPTIONS.merge options
+      options = DEFAULT_OPTIONS.merge options
+      super(options)
+      @runner = Runner.new options
     end
 
     def start
-      Guard::Compat::UI.info "Guard::Riotjs is running"
+      ::Guard::Compat::UI.info "Guard::Riotjs is running"
+      run_all if options[:all_on_start]
     end
 
     def run_all
-      true
+      ::Guard::Compat::UI.info "compile all .tag files"
+      runner.run ::Guard::Watcher.match_files(self, Dir['**/*.tag'])
     end
 
     def run_on_additions(paths)
-      return false if paths.empty?
-      paths.each do |path|
-        raise :task_has_failed unless compile_tag(path)
-      end
+      raise :task_has_failed unless runner.run paths
     end
 
     def run_on_modifications(paths)
-      return false if paths.empty?
-      paths.each do |path|
-        raise :task_has_failed unless compile_tag(path)
-      end
+      raise :task_has_failed unless runner.run paths
     end
 
     def run_on_removals(paths)
-      return false if paths.empty?
-
-      targets = paths.map{|p| "#{options[:dist]}/#{File.basename(p).sub(/\.tag$/, '.js')}" }
-      FileUtils.rm targets, force: true, verbose: true
-    end
-
-
-    private
-
-    def compile_tag(path)
-      system "#{options[:cmd]} #{path} #{options[:dist]}"
+      raise :task_has_failed unless runner.remove_files paths
     end
 
   end
