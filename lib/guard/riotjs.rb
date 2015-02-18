@@ -28,15 +28,15 @@ module Guard
     end
 
     def run_on_additions(paths)
-      raise :task_has_failed unless runner.run paths
+      throw :task_has_failed unless runner.run paths
     end
 
     def run_on_modifications(paths)
-      raise :task_has_failed unless runner.run paths
+      throw :task_has_failed unless runner.run paths
     end
 
     def run_on_removals(paths)
-      raise :task_has_failed unless runner.remove_files paths
+      throw :task_has_failed unless runner.remove_files paths
     end
 
   end
