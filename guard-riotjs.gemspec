@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Guard::RiotjsVersion::VERSION
   spec.authors       = ["ichi"]
   spec.email         = ["ichi.ttht.1@gmail.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = "Guard-RiotJS is a Guard plugin to let you compile .tag files"
+  spec.description   = "Guard-RiotJS is a Guard plugin to let you compile your RiotJS .tag files into .js files ready to be loaded in your RiotJS app. The compilation is done by guard on file save."
   spec.homepage      = ""
   spec.license       = "MIT"
 
